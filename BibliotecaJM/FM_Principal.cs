@@ -25,17 +25,50 @@ namespace BibliotecaJM
         }
         private void tsbLectores_Click(object sender, EventArgs e)
         {
-            VisualizarFormularioYTítulo(new FM_Lectores(usuarioActual),"Mantenimiento lectores");
+            if (usuarioActual.TipoUsuario == "A" || usuarioActual.TipoUsuario == "O")
+            {
+                VisualizarFormularioYTítulo(new FM_Lectores(usuarioActual), "Mantenimiento lectores");
+            }
+            else
+            {
+                MessageBox.Show("No tienes permisos");
+            }
+        }
+
+
+        private void FM_Principal_Shown(object sender, EventArgs e)
+        {
+            FM_Login fl = new FM_Login();
+            fl.ShowDialog();
+            if (fl.usuarioActual == null)
+            {
+                this.Close();
+            }
+            this.usuarioActual = fl.usuarioActual;
         }
 
         private void tsbLibros_Click(object sender, EventArgs e)
         {
-            VisualizarFormularioYTítulo(new FM_Libros(usuarioActual), "Mantenimiento libros");
+            if (usuarioActual.TipoUsuario == "A" || usuarioActual.TipoUsuario == "O")
+            {
+                VisualizarFormularioYTítulo(new FM_Libros(usuarioActual), "Mantenimiento libros");
+            }
+            else
+            {
+                MessageBox.Show("No tienes permisos");
+            }
         }
 
         private void tsbPréstamos_Click(object sender, EventArgs e)
         {
-            VisualizarFormularioYTítulo(new FM_Prestamos(usuarioActual), "Préstamos");
+            if (usuarioActual.TipoUsuario == "A" || usuarioActual.TipoUsuario == "O")
+            {
+                VisualizarFormularioYTítulo(new FM_Prestamos(usuarioActual), "Préstamos");
+            }
+            else
+            {
+                MessageBox.Show("No tienes permisos");
+            }
         }
 
         private void tsbDevoluciones_Click(object sender, EventArgs e)
@@ -72,5 +105,6 @@ namespace BibliotecaJM
             foreach (ToolStripButton boton in toolStrip1.Items)
                 boton.CheckState = CheckState.Unchecked;
         }
+
     }
 }
